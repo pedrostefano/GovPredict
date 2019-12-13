@@ -6,7 +6,8 @@ namespace GovPredict.Models
 
     public string Content { get; set; }
     public string Link { get; set; }
-    public Profile Profile { get; set; }
+    public int AccountId { get; set; }
+    public Account Account { get; set; }
 
   }
 }

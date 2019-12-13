@@ -6,8 +6,9 @@ namespace GovPredict.VOs
   {
     public DateTime InitialDate { get; set; }
     public DateTime FinalDate { get; set; }
-    public ESocialNetwork[] SocialNetwork { get; set; }
-    public int[] PeopleList { get; set; }
+    public ESocialNetwork[] SocialNetworks { get; set; }
+    public string[] Lists { get; set; }
     public string Content { get; set; }
+    public string Account { get; set; }
   }
 }
