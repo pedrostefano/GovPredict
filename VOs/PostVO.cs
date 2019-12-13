@@ -11,6 +11,7 @@ namespace GovPredict.VOs
     public string SocialNetwork { get; set; }
     public string[] Lists { get; set; }
     public DateTime Date { get; set; }
+    public SummaryVO Summary { get; set; }
 
   }
 }
