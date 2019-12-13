@@ -22,15 +22,10 @@ namespace GovPredict.Controllers
       return new PostVO();
     }
 
-    [HttpPost]
+    [HttpPost("filter")]
     public IEnumerable<PostVO> GetWithFilter([FromBody]PostFilter filter)
     {
-      var posts = new List<PostVO>();
-
-
-
-
-
+      var posts = PostService.GetAllPostsFromFilter(filter);
       return posts;
     }
   }

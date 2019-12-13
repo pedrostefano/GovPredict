@@ -1,3 +1,4 @@
+using System;
 
 namespace GovPredict.Models
 {
@@ -6,6 +7,7 @@ namespace GovPredict.Models
 
     public string Content { get; set; }
     public string Link { get; set; }
+    public DateTime Date { get; set; }
     public int AccountId { get; set; }
     public Account Account { get; set; }
 

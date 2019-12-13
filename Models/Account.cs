@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using GovPredict.VOs;
 
 namespace GovPredict.Models
 {
@@ -9,7 +8,8 @@ namespace GovPredict.Models
     public string Name { get; set; }
     public int UserId { get; set; }
     public User User { get; set; }
-    public ESocialNetwork SocialNetwork { get; set; }
+    public int SocialNetworkId { get; set; }
+    public SocialNetwork SocialNetwork { get; set; }
     public ICollection<Post> Posts { get; set; }
   }
 }
