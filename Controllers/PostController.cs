@@ -1,5 +1,6 @@
-using System.Collections.Generic;
+using System;
 using GovPredict.VOs;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -23,10 +24,17 @@ namespace GovPredict.Controllers
     }
 
     [HttpPost("filter/{PageIndex}/{ListSize}")]
-    public ResponseVO GetWithFilter([FromBody]PostFilter filter, int PageIndex, int ListSize)
+    public ActionResult GetWithFilter([FromBody]PostFilter filter, int PageIndex, int ListSize)
     {
-      var response = PostService.GetAllPostsFromFilter(filter, PageIndex, ListSize);
-      return response;
+      try
+      {
+        var response = PostService.GetAllPostsFromFilter(filter, PageIndex, ListSize);
+        return Ok(response);
+      }
+      catch (Exception)
+      {
+        return StatusCode(StatusCodes.Status500InternalServerError);
+      }
     }
   }
 }
