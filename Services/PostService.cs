@@ -4,7 +4,6 @@ using GovPredict.VOs;
 
 public class PostService
 {
-
   public static ResponseVO GetAllPostsFromFilter(PostFilter filter, int PageIndex, int ListSize)
   {
     PageIndex = PageIndex == 0 ? 1 : PageIndex;
@@ -51,4 +50,17 @@ public class PostService
     }
   }
 
+  public static OptionsVO GetOptions()
+  {
+    using (var db = new GovPredictContext())
+    {
+      var socialNetworks = db.SocialNetworks.Select(sn => sn.Name).ToArray();
+      var lists = db.Lists.Select(l => l.Name).Distinct().ToArray();
+      return new OptionsVO()
+      {
+        Lists = lists,
+        SocialNetworks = socialNetworks
+      };
+    }
+  }
 }

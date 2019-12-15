@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 namespace GovPredict.VOs
 {
   public class SummaryVO

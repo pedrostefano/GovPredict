@@ -87,12 +87,9 @@ namespace GovPredict.Models
             Content = faker.Lorem.Sentence(3, 50),
             Link = faker.Internet.Url(),
             Date = faker.Date.Between(DateTime.Now.AddYears(-1), DateTime.Now.AddMonths(2)),
-            AccountId = faker.Random.Number(1, 3)
+            AccountId = faker.Random.Number(1, 8)
           });
       }
-
-
-
     }
   }
 

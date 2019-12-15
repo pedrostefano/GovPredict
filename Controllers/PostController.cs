@@ -23,6 +23,20 @@ namespace GovPredict.Controllers
       return new PostVO();
     }
 
+    [HttpGet("options")]
+    public ActionResult GetOptions()
+    {
+      try
+      {
+        var options = PostService.GetOptions();
+        return Ok(options);
+      }
+      catch (Exception)
+      {
+        return StatusCode(StatusCodes.Status500InternalServerError);
+      }
+    }
+
     [HttpPost("filter/{PageIndex}/{ListSize}")]
     public ActionResult GetWithFilter([FromBody]PostFilter filter, int PageIndex, int ListSize)
     {
