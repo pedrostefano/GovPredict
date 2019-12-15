@@ -1,0 +1,12 @@
+.list {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 30px;
+}
+
+.card {
+  margin: 10px;
+  height: 100px;
+  width: 600px;
+}

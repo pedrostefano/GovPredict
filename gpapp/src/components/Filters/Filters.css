@@ -1,0 +1,19 @@
+.Filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  padding: 30px;
+}
+.filter {
+  margin: 5px;
+}
+
+.chips {
+  display: "flex";
+  flex-wrap: "wrap";
+}
+
+.chip {
+  margin: 2;
+}

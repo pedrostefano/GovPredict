@@ -4,8 +4,8 @@ namespace GovPredict.VOs
 {
   public class PostFilter
   {
-    public DateTime InitialDate { get; set; }
-    public DateTime FinalDate { get; set; }
+    public DateTime? InitialDate { get; set; }
+    public DateTime? FinalDate { get; set; }
     public string[] SocialNetworks { get; set; }
     public string[] Lists { get; set; }
     public string Content { get; set; }
