@@ -37,7 +37,7 @@ namespace GovPredict
         app.UseDeveloperExceptionPage();
       }
 
-      app.UseHttpsRedirection();
+      // app.UseHttpsRedirection();
 
       //Serve index.html as root 
       DefaultFilesOptions options = new DefaultFilesOptions();
@@ -51,7 +51,7 @@ namespace GovPredict
 
       app.UseRouting();
 
-      app.UseAuthorization();
+      // app.UseAuthorization();
 
       app.UseEndpoints(endpoints =>
       {

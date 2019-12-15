@@ -39,7 +39,7 @@ class App extends Component {
   
   getOptions = () => {
     axios
-    .get(`https://localhost:5001/post/options`)
+    .get(`http://localhost:5000/post/options`)
     .then(res => {
       const filterOptions = res.data;
       this.setState({ filterOptions });
@@ -49,7 +49,7 @@ class App extends Component {
   getFilteredPosts = (page=1) => {    
     const size = this.state.pagination.limit;    
     axios
-      .post(`https://localhost:5001/post/filter/${page}/${size}`, this.state.filter)
+      .post(`http://localhost:5000/post/filter/${page}/${size}`, this.state.filter)
       .then(res => {
         const pagination = {
           ...this.state.pagination,
