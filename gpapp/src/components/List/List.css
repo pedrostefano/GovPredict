@@ -6,7 +6,36 @@
 }
 
 .card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   margin: 10px;
-  height: 100px;
-  width: 600px;
+  padding: 10px;
+  min-height: 200px;
+  width: 500px;
+}
+
+.content {
+  flex: 1;
+  text-align: left;
+}
+
+.card .item {
+  padding: 5px;
+}
+
+.card .header {
+  display: flex;
+  align-items: center;
+}
+
+.card .footer {
+  display: flex;
+  justify-content: space-around;
+}
+
+.lists {
+  display: flex;
+  justify-content: space-around;
+  flex: 1;
 }

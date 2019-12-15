@@ -37,8 +37,8 @@ class App extends Component {
     axios
       .post(`https://localhost:5001/post/filter/1/10`, this.state.filter)
       .then(res => {
-        const posts = res.data ? res.data : [];
-        this.setState({ posts });
+        const postsData = res.data;
+        this.setState({ postsData });
       });
   };
 
