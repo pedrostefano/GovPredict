@@ -18,6 +18,14 @@ namespace GovPredict
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+
+      services.AddCors(options =>
+      {
+        options.AddPolicy("AllowMyOrigin", builder =>
+          builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader());
+      });
       services.AddControllers();
     }
 
@@ -36,6 +44,8 @@ namespace GovPredict
       options.DefaultFileNames.Clear();
       options.DefaultFileNames.Add("index.html");
       app.UseDefaultFiles(options);
+
+      app.UseCors("AllowMyOrigin");
 
       app.UseStaticFiles();
 
