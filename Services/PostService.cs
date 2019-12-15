@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using GovPredict.Models;
 using GovPredict.VOs;
@@ -19,8 +18,8 @@ public class PostService
           (filter.Content == null || p.Content.Contains(filter.Content))
           && (filter.InitialDate == null || (p.Date >= filter.InitialDate))
           && (filter.FinalDate == null || (p.Date <= filter.FinalDate))
-          && (filter.SocialNetworks == null || filter.SocialNetworks.ToList().Contains(p.Account.SocialNetwork.Name))
-          && (filter.Lists == null || p.Account.User.UserLists.Select(ul => ul.List).Any(ul => filter.Lists.ToList().Contains(ul.Name)))
+          && ((filter.SocialNetworks == null || filter.SocialNetworks.ToList().Count == 0) || filter.SocialNetworks.ToList().Contains(p.Account.SocialNetwork.Name))
+          && ((filter.Lists == null || filter.Lists.ToList().Count == 0) || p.Account.User.UserLists.Select(ul => ul.List).Any(ul => filter.Lists.ToList().Contains(ul.Name)))
         );
 
       //Pagination
