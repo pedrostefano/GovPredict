@@ -4,22 +4,28 @@ import axios from "axios";
 import Header from "./components/Header/Header";
 import Filters from "./components/Filters/Filters";
 import List from "./components/List/List";
+import PaginationTool from "./components/PaginationTool/PaginationTool";
 
 import "./App.css";
 
 class App extends Component {
   state = {
     postsData: {
-      posts: [],
-      summary: {}
+      posts: []
+    },
+    pagination:{
+      limit: 10,
+      offset: 0,
+      page:1,
+      total: 0
     },
     filterOptions: {
-      lists: ["Cool", "Bad"],
-      socialNetworks: ["Facebook", "Twitter"]
+      lists: [],
+      socialNetworks: []
     },
     filter: {
-      content: "A",
-      initialDate: new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate()-1),
+      content: "",
+      initialDate: new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate()-10),
       finalDate: new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate()),
       lists: [],
       socialNetworks: []
@@ -27,20 +33,43 @@ class App extends Component {
   };
 
   componentDidMount() {
-    axios.post(`https://localhost:5001/post/filter/1/10`, {}).then(res => {
-      const postsData = res.data;
-      this.setState({ postsData });
+    this.getOptions();
+    this.getFilteredPosts();
+  }
+  
+  getOptions = () => {
+    axios
+    .get(`https://localhost:5001/post/options`)
+    .then(res => {
+      const filterOptions = res.data;
+      this.setState({ filterOptions });
     });
   }
 
-  getFilteredPosts = () => {
+  getFilteredPosts = (page=1) => {    
+    const size = this.state.pagination.limit;    
     axios
-      .post(`https://localhost:5001/post/filter/1/10`, this.state.filter)
+      .post(`https://localhost:5001/post/filter/${page}/${size}`, this.state.filter)
       .then(res => {
-        const postsData = res.data;
-        this.setState({ postsData });
+        const pagination = {
+          ...this.state.pagination,
+          offset: res.data.summary.listSize * (res.data.summary.pageIndex-1),
+          total: res.data.summary.returnedListSize,
+        };
+        const postsData = res.data; 
+        this.setState({ postsData, pagination });
       });
   };
+
+  handlePaginationLimitChange = e => {
+    const { pagination } = this.state;
+    pagination.limit = e.target.value;
+    this.setState(pagination);
+  }
+
+  handlePaginationClick = (_offset, page) => {
+    this.getFilteredPosts(page);
+  }
 
   handleChangeContent = e => {
     const { filter } = this.state;
@@ -87,6 +116,14 @@ class App extends Component {
           handleChangeLists={this.handleChangeLists}
           handleChangeSocialNetworks={this.handleChangeSocialNetworks}
         />
+        <PaginationTool 
+          limit={this.state.pagination.limit}
+          offset={this.state.pagination.offset}
+          total={this.state.pagination.total}
+          handlePaginationLimitChange={this.handlePaginationLimitChange}
+          handlePaginationClick={this.handlePaginationClick}
+          />
+          
         <List posts={this.state.postsData.posts} />
       </div>
     );
