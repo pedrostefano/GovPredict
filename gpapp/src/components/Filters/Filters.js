@@ -20,13 +20,14 @@ import "./Filters.css";
 const Filters = props => {
   return (
     <div className="Filters">
+      
       {/* LISTS */}
       <FormControl className="filter formcontrol" style={{ minWidth: 200 }}>
         <InputLabel>Lists</InputLabel>
         <Select
           multiple
           value={props.filter.lists}
-          onChange={e => props.handleChangeLists(e)}
+          onChange={e => props.handleFilterChange(e.target.value, "lists")}
           input={<Input />}
           renderValue={selected => (
             <div className="chips">
@@ -51,7 +52,7 @@ const Filters = props => {
           id="scs-select"
           multiple
           value={props.filter.socialNetworks}
-          onChange={e => props.handleChangeSocialNetworks(e)}
+          onChange={e => props.handleFilterChange(e.target.value, "socialNetworks")}
           input={<Input />}
           renderValue={selected => (
             <div className="chips">
@@ -69,7 +70,7 @@ const Filters = props => {
         </Select>
       </FormControl>
 
-        {/* InitialData */}
+        {/* InitialDate */}
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <KeyboardDatePicker
           className="filter"
@@ -79,13 +80,13 @@ const Filters = props => {
           margin="normal"
           label="Initial Date"
           value={props.filter.initialDate}
-          onChange={e => props.handleInitialDateChange(e)}
+          onChange={value => props.handleFilterChange(value, "initialDate")}
           KeyboardButtonProps={{
             "aria-label": "change date"
           }}
         />
 
-        {/* FinalData */}
+        {/* FinalDate */}
         <KeyboardDatePicker
           className="filter"
           disableToolbar
@@ -94,7 +95,7 @@ const Filters = props => {
           margin="normal"
           label="Final Date"
           value={props.filter.finalDate}
-          onChange={e => props.handleFinalDateChange(e)}
+          onChange={value => props.handleFilterChange(value, "finalDate")}
           KeyboardButtonProps={{
             "aria-label": "change date"
           }}
@@ -105,8 +106,8 @@ const Filters = props => {
       <TextField
         className="filter"
         label="Search Content"
-        value={props.filter.content}
-        onChange={e => props.handleChangeContent(e)}
+        value={props.filter.content}  
+        onChange={e => props.handleFilterChange(e.target.value, "content")}
       />
       <Button
         variant="contained"

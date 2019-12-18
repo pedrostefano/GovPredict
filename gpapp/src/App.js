@@ -14,10 +14,10 @@ class App extends Component {
     postsData: {
       posts: []
     },
-    pagination:{
+    pagination: {
       limit: 10,
       offset: 0,
-      page:1,
+      page: 1,
       total: 0
     },
     filterOptions: {
@@ -26,8 +26,16 @@ class App extends Component {
     },
     filter: {
       content: "",
-      initialDate: new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate()-10),
-      finalDate: new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate()),
+      initialDate: new Date(
+        new Date().getFullYear(),
+        new Date().getMonth(),
+        new Date().getDate() - 10
+      ),
+      finalDate: new Date(
+        new Date().getFullYear(),
+        new Date().getMonth(),
+        new Date().getDate()
+      ),
       lists: [],
       socialNetworks: []
     }
@@ -37,68 +45,42 @@ class App extends Component {
     this.getOptions();
     this.getFilteredPosts();
   }
-  
+
   getOptions = () => {
-    axios
-    .get(`${config.API.URL}/post/options`)
-    .then(res => {
+    axios.get(`${config.API.URL}/post/options`).then(res => {
       const filterOptions = res.data;
       this.setState({ filterOptions });
     });
-  }
+  };
 
-  getFilteredPosts = (page=1) => {    
-    const size = this.state.pagination.limit;    
+  getFilteredPosts = (page = 1) => {
+    const size = this.state.pagination.limit;
     axios
       .post(`${config.API.URL}/post/filter/${page}/${size}`, this.state.filter)
       .then(res => {
         const pagination = {
           ...this.state.pagination,
-          offset: res.data.summary.listSize * (res.data.summary.pageIndex-1),
-          total: res.data.summary.returnedListSize,
+          offset: res.data.summary.listSize * (res.data.summary.pageIndex - 1),
+          total: res.data.summary.returnedListSize
         };
-        const postsData = res.data; 
+        const postsData = res.data;
         this.setState({ postsData, pagination });
       });
+  };
+
+  handlePaginationClick = (_offset, page) => {
+    this.getFilteredPosts(page);
   };
 
   handlePaginationLimitChange = e => {
     const { pagination } = this.state;
     pagination.limit = e.target.value;
     this.setState(pagination);
-  }
-
-  handlePaginationClick = (_offset, page) => {
-    this.getFilteredPosts(page);
-  }
-
-  handleChangeContent = e => {
-    const { filter } = this.state;
-    filter.content = e.target.value;
-    this.setState(filter);
   };
 
-  handleInitialDateChange = value => {
+  handleFilterChange = (value, filterAttr) => {
     const { filter } = this.state;
-    filter.initialDate = value;
-    this.setState(filter);
-  };
-
-  handleFinalDateChange = value => {
-    const { filter } = this.state;
-    filter.finalDate = value;
-    this.setState(filter);
-  };
-
-  handleChangeLists = event => {
-    const { filter } = this.state;
-    filter.lists = event.target.value;
-    this.setState(filter);
-  };
-
-  handleChangeSocialNetworks = event => {
-    const { filter } = this.state;
-    filter.socialNetworks = event.target.value;
+    filter[filterAttr] = value;
     this.setState(filter);
   };
 
@@ -111,20 +93,16 @@ class App extends Component {
           filter={this.state.filter}
           click={this.getFilteredPosts}
           getFilteredPosts={this.getFilteredPosts}
-          handleChangeContent={this.handleChangeContent}
-          handleInitialDateChange={this.handleInitialDateChange}
-          handleFinalDateChange={this.handleFinalDateChange}
-          handleChangeLists={this.handleChangeLists}
-          handleChangeSocialNetworks={this.handleChangeSocialNetworks}
+          handleFilterChange={this.handleFilterChange}
         />
-        <PaginationTool 
+        <PaginationTool
           limit={this.state.pagination.limit}
           offset={this.state.pagination.offset}
           total={this.state.pagination.total}
           handlePaginationLimitChange={this.handlePaginationLimitChange}
           handlePaginationClick={this.handlePaginationClick}
-          />
-          
+        />
+
         <List posts={this.state.postsData.posts} />
       </div>
     );
