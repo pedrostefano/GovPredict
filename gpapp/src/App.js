@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import config from "./config";
 
 import Header from "./components/Header/Header";
 import Filters from "./components/Filters/Filters";
@@ -39,7 +40,7 @@ class App extends Component {
   
   getOptions = () => {
     axios
-    .get(`http://localhost:5000/post/options`)
+    .get(`${config.API.URL}/post/options`)
     .then(res => {
       const filterOptions = res.data;
       this.setState({ filterOptions });
@@ -49,7 +50,7 @@ class App extends Component {
   getFilteredPosts = (page=1) => {    
     const size = this.state.pagination.limit;    
     axios
-      .post(`http://localhost:5000/post/filter/${page}/${size}`, this.state.filter)
+      .post(`${config.API.URL}/post/filter/${page}/${size}`, this.state.filter)
       .then(res => {
         const pagination = {
           ...this.state.pagination,
